@@ -48,6 +48,20 @@ DISABLE_INSTALLER=${DISABLE_INSTALLER:-false}
 ENABLE_IMAPS=${ENABLE_IMAPS:-true}
 ENABLE_SMTPS=${ENABLE_SMTPS:-true}
 
+# Configure Emoticons Plugin
+mv /roundcube/plugins/emoticons/config.inc.php.dist /roundcube/plugins/emoticons/config.inc.php
+export EMOT="\$config['emoticons_display'] = true;"
+sed -i "/\$config\['emoticons_display'\]/c $EMOT" /roundcube/plugins/emoticons/config.inc.php
+
+# Configure managesieve
+mv /roundcube/plugins/managesieve/config.inc.php.dist /roundcube/plugins/managesieve/config.inc.php
+export SIVPORT="\$config['managesieve_port'] = 4190;"
+export SIVHOST="\$config['managesieve_host'] = '${MAIL_HOST}';"
+export SIVTLS="\$config['managesieve_usetls'] = true;"
+sed -i "/\$config\['managesieve_port'\]/c $SIVPORT" /roundcube/plugins/managesieve/config.inc.php
+sed -i "/\$config\['managesieve_host'\]/c $SIVHOST" /roundcube/plugins/managesieve/config.inc.php
+sed -i "/\$config\['managesieve_usetls'\]/c $SIVTLS" /roundcube/plugins/managesieve/config.inc.php
+
 # Create smarty cache folder
 mkdir -p /postfixadmin/templates_c
 

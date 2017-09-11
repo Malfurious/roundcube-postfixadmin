@@ -6,7 +6,7 @@ LABEL description "Roundcube-Postfix is a simple, modern & fast webmail client c
 ARG ROUND_VERSION=1.3.1
 ARG POST_VERSION=3.1
 ENV UID=991 GID=991 UPLOAD_MAX_SIZE=25M MEMORY_LIMIT=128M
-ENV PLUGINS=" 'password','enigma'"
+ENV PLUGINS=" 'password','enigma','emoticons','filesystem_attachments','managesieve','markasjunk','archive'"
 RUN echo "@community https://nl.alpinelinux.org/alpine/v3.6/community" >> /etc/apk/repositories \
  && apk -U upgrade
 RUN apk add gnupg openssl dovecot tini@community
