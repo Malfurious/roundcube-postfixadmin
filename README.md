@@ -58,7 +58,8 @@ Postfixadmin:
 
 #### 1. Set required Environment Variables.
 After looking at the above tabe, set variables as required. 
-If running manually, be sure to add this extra parameter: --add-host <mailserver hostname>:<mailserver IP Address>
+If running manually, be sure to add this extra parameter: --add-host mail.domain.com:xxx.xxx.xxx.xxx
+Replace 'mail.domain.com' with your MAIL_HOST, and the 'xxx.xxx.xxx.xxx' with your MAIL_HOST's IP Address.
 Then start the docker.
 
 #### 2. Postfixadmin Setup: Goto http://[YOUR IP]:[POSTFIX PORT]/setup.php
