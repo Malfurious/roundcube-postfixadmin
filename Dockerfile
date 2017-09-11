@@ -37,15 +37,13 @@ RUN cd /roundcube && php composer.phar install --no-dev && php composer.phar req
  && find /roundcube -type f -exec chmod 644 {} \; \
  && apk del build-dependencies \
  && rm -rf /tmp/* /var/cache/apk/* /root/.gnupg /postfixadmin/postfixadmin-${POST_VERSION}*
-RUN cat /roundcube/plugins/calendar/drivers/database/SQL/mysql.initial.sql >> /roundcube/SQL/mysql.initial.sql \
- && cat /roundcube/plugins/tasklist/drivers/database/SQL/mysql.initial.sql >> /roundcube/SQL/mysql.initial.sql \
- && cat /roundcube/plugins/persistent_login/sql/mysql.sql >> /roundcube/SQL/mysql.initial.sql
 RUN mkdir /enigma && mv /roundcube/plugins/password/config.inc.php.dist /roundcube/plugins/password/config.inc.php \
  && mv /roundcube/plugins/enigma/config.inc.php.dist /roundcube/plugins/enigma/config.inc.php \
  && mv /roundcube/plugins/tasklist/config.inc.php.dist /roundcube/plugins/tasklist/config.inc.php \
  && mv /roundcube/plugins/persistent_login/config.inc.php.dist /roundcube/plugins/persistent_login/config.inc.php
 RUN sed -i "/'zipdownload',/a ${PLUGINS}" /roundcube/config/config.inc.php
 COPY rootfs /
+COPY mysql.initial.sql /roundcube/SQL
 RUN chmod +x /usr/local/bin/* /etc/s6.d/*/* /etc/s6.d/.s6-svscan/*
 EXPOSE 8888 8080
 VOLUME /enigma
