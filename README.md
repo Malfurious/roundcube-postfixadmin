@@ -67,15 +67,23 @@ Replace 'mail.domain.com' with your MAIL_HOST, and the 'xxx.xxx.xxx.xxx' with yo
 Then start the docker.
 
 #### 2. Postfixadmin Setup: Goto http://[YOUR IP]:[POSTFIX PORT]/setup.php
-
+![postfix1](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Postfixadmin-1.PNG "postfix1")
 Enter a long setup password in the first box, then confirm the password in the second. Click 'Generate password hash'
 Something like: $CONF['setup_password'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'; should show up.
+![postfix2](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Postfixadmin-2.PNG "postfix2")
 Run the following command on: 'docker exec -it <name of this docker container> setup'
+![postfix3](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Postfixadmin-3.PNG "postfix3")
 Enter in the long string you got earlier (the long string of xxxxx as shown above), and hit enter. You should be greeted with a 'Setup done'
-Now, back at the Postfixadmin screen you left, you can now create the superadmin account. Once finished, you may login at: http://[YOUR IP]:[POSTFIX PORT]/login.php using the superadmin credentials.
+Now, back at the Postfixadmin screen you left, you can now create the superadmin account.
+![postfix4](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Postfixadmin-4.PNG "postfix4")
+Once finished, you may login at: http://[YOUR IP]:[POSTFIX PORT]/login.php using the superadmin credentials.
 Once logged in, create a new domain by going under 'Domain list', and selecting 'New domain'.
+![postfix5](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Postfixadmin-5.PNG "postfix5")
 Fill in the domain you want to use (the last half of the 'mail.domain.com' used earlier), and click 'Add Domain'.
+![postfix6](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Postfixadmin-6.PNG "postfix6")
 Now under 'Virtual List', you can add mailboxes to this domain, creating individual email accounts.
+![postfix7](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Postfixadmin-7.PNG "postfix7")
+![postfix8](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Postfixadmin-8.PNG "postfix8")
 We are now done with setting up Postfixadmin for now.
 
 #### 3. Roundcube Setup: Goto http://[YOUR IP]:[ROUNDCUBE PORT]/installer
@@ -87,11 +95,11 @@ Everything should say "OK" on the first screen, except:
 - **Oracle**
 - **Net_LDAP3**
 - **date.timezone**
-
-Hit "Next" at the bottom of the page.
-
+![roundcube1](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Roundcube-Setup-1.PNG "roundcube1")
+### Hit "Next" at the bottom of the page.
 Assuming you entered the MySQL Information correction, you should see a green "OK" next to "DSN (write)".
 If so, click the initialize button.
+![roundcube2](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Roundcube-Setup-2.PNG "roundcube2")
 Once done, feel free to test your connection to the mailserver by entering in mailbox credentials that you setup earlier while configuring Postfixadmin.
 Hopefully, when tested, you will get a green 'OK' indicating its working.
 If everything works, shutdown the container, and start back up with the DISABLE_INSTALLER variable set to 'true'.
@@ -109,3 +117,6 @@ docker run -d --name=roundcube-postfixadmin \
   -v /mnt/docker/enigma:/enigma malfurious/mailserver:latest
 ```
 #### Setup Complete!
+
+#### For a Guide on setting up a Reverse Proxy with SSL Certificates, follow the link below!
+https://github.com/Malfurious/mailserver/wiki/Reverse-Proxy-Configuration
