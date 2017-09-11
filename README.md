@@ -87,7 +87,7 @@ Everything should say "OK" on the first screen, except:
 - **Oracle**
 - **Net_LDAP3**
 - **date.timezone**
-
+![postfix1](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Postfixadmin-1.PNG "postfix1")
 Hit "Next" at the bottom of the page.
 
 Assuming you entered the MySQL Information correction, you should see a green "OK" next to "DSN (write)".
