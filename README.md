@@ -92,4 +92,16 @@ Once done, feel free to test your connection to the mailserver by entering in ma
 Hopefully, when tested, you will get a green 'OK' indicating its working.
 If everything works, shutdown the container, and start back up with the DISABLE_INSTALLER variable set to 'true'.
 
+#### Installation (Manually, not using UnRAID Template)
+Run the following command to pull the latest image: 'docker pull malfurious/roundcube-postfixadmin:latest'
+Now, Run this to start the docker:
+```
+docker run -d --name=roundcube-postfixadmin \
+  -p 8888:8888 -p 8080:8080 --add-host mail.domain.com:127.0.0.1 \
+  -e MAIL_HOST=mail.domain.com -e POST_USER=postfix -e POST_PASS=password \
+  -e POST_DB=postfix -e MYSQL_HOST=mariadb_ipaddress -e ROUND_USER=roundcube \
+  -e ROUND_PASS=password -e ROUND_DB=roundcube -e ENABLE_IMAPS=true -e ENABLE_SMTPS=true \
+  -e DISABLE_INSTALLER=false -e PASS_CRYPT=sha512-crypt \
+  -v /mnt/docker/enigma:/enigma malfurious/mailserver:latest
+```
 #### Setup Complete!
