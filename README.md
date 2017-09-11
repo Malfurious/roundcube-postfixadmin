@@ -21,15 +21,21 @@ Goto https://github.com/Malfurious/mailserver for more information!
 - Simple nginx server built-in for reverse proxy
 
 ### Roundcube Features
-
-- Password Change Plugin configured for Postfixadmin
-- Enigma Plugin enabled for email encryption, plus it stores your generated encryption keys server-side
-- ManageSieve Plugin enabled, allowing custom filter scripts
-- Emoticons Plugin enabled
-- MarkAsJunk Plugin enabled
 - Lightweight, based on Alpine Linux
 - Latest Roundcube version (1.3.1)
 - Simple nginx server built-in for reverse proxy
+
+#### Roundcube Plugins:
+- **Password Change Plugin configured for Postfixadmin**
+- **Enigma Plugin enabled for email encryption, plus it stores your generated encryption keys server-side**
+- **ManageSieve Plugin enabled, allowing custom filter scripts**
+- **Emoticons Plugin enabled**
+- **MarkAsJunk2 Plugin enabled**
+- **Calendar Plugin by Kolab**
+- **Tasklist Plugin by Kolab**
+- **Persistent Login Plugin**
+- **Google 2-factor Authenticator Plugin**
+- **Identity SMTP Plugin**
 
 ### Ports (Configurable)
 
