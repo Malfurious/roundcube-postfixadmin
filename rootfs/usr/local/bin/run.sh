@@ -53,6 +53,10 @@ mv /roundcube/plugins/emoticons/config.inc.php.dist /roundcube/plugins/emoticons
 export EMOT="\$config['emoticons_display'] = true;"
 sed -i "/\$config\['emoticons_display'\]/c $EMOT" /roundcube/plugins/emoticons/config.inc.php
 
+# Configure persistent login
+export PERS="\$rcmail_config['ifpl_use_auth_tokens'] = true;"
+sed -i "/\$rcmail_config\['ifpl_use_auth_tokens'\]/c $PERS" /roundcube/plugins/persistent_login/config.inc.php
+
 # Configure managesieve
 mv /roundcube/plugins/managesieve/config.inc.php.dist /roundcube/plugins/managesieve/config.inc.php
 export SIVPORT="\$config['managesieve_port'] = 4190;"
