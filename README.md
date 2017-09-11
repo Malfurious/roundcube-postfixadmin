@@ -36,6 +36,7 @@ Goto https://github.com/Malfurious/mailserver for more information!
 - **Persistent Login Plugin**
 - **Google 2-factor Authenticator Plugin**
 - **Identity SMTP Plugin**
+- **Contextmenu Plugin**
 
 ### Ports (Configurable)
 
