@@ -77,7 +77,7 @@ We are now done with setting up Postfixadmin for now.
 #### 3. Roundcube Setup: Goto http://[YOUR IP]:[ROUNDCUBE PORT]/installer
 Everything should say "OK" on the first screen, except:
 - **SQLite**
-- **SQLite (v2)
+- **SQLite (v2)**
 - **SQL Server (SQLSRV)**
 - **SQL Server (DBLIB)**
 - **Oracle**
