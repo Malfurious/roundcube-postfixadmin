@@ -53,9 +53,9 @@ Postfixadmin:
 | **POST_PASS** | MariaDB Postfix password | **required** | null
 | **POST_DB** | MariaDB Postfix Database Name | *optional* | postfix
 | **MAIL_HOST** | Mail Server Name | **required** | mail.domain.com
-| **ENABLE_IMAPS** | Enable/Disable IMAPS (SSL) | *optional* | 'true'
-| **ENABLE_SMTPS** | Enable/Disable SMTPS (STARTTLS) | *optional* | 'true'
-| **DISABLE_INSTALLER** | Enable/Disable Roundcube Installer | *optional* | 'false'
+| **ENABLE_IMAPS** | Enable/Disable IMAPS (SSL) | *optional* | true
+| **ENABLE_SMTPS** | Enable/Disable SMTPS (STARTTLS) | *optional* | true
+| **DISABLE_INSTALLER** | Enable/Disable Roundcube Installer | *optional* | false
 | **ROUNDCUBE_PORT** | Roundcube nginx listening port | *optional* | null
 | **POSTFIX_PORT** | Postfixadmin nginx listening port | *optional* | null
 | **PASS_CRYPT** | Passwords encryption method | *optional* | `SHA512-CRYPT`
