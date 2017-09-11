@@ -6,7 +6,7 @@ LABEL description "Roundcube-Postfix is a simple, modern & fast webmail client c
 ARG ROUND_VERSION=1.3.1
 ARG POST_VERSION=3.1
 ENV UID=991 GID=991 UPLOAD_MAX_SIZE=25M MEMORY_LIMIT=128M
-ENV PLUGINS=" 'password','enigma','emoticons','filesystem_attachments','managesieve','markasjunk','archive','twofactor_gauthenticator','identity_smtp','calendar'"
+ENV PLUGINS=" 'password','enigma','emoticons','filesystem_attachments','managesieve','archive','twofactor_gauthenticator','identity_smtp','calendar','contextmenu','markasjunk2','tasklist','persistent_login'"
 RUN echo "@community https://nl.alpinelinux.org/alpine/v3.6/community" >> /etc/apk/repositories \
  && apk -U upgrade
 RUN apk add gnupg openssl dovecot tini@community
@@ -30,15 +30,20 @@ RUN mkdir /postfixadmin && tar xzf /tmp/postfixadmin-${POST_VERSION}.tar.gz -C /
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/roundcube/ --filename=composer.phar
 RUN cd /roundcube && php composer.phar install --no-dev && php composer.phar require sabre/vobject 3.3.3 \
  && cd /roundcube/plugins && git clone https://github.com/alexandregz/twofactor_gauthenticator.git && git clone git://github.com/elm/Roundcube-SMTP-per-Identity-Plugin.git identity_smtp \
- && cp -r /tmp/roundcubemail-plugins-kolab/plugins/calendar . && cp -r /tmp/roundcubemail-plugins-kolab/plugins/libcalendaring . \
- && cd /roundcube/plugins/calendar && cp config.inc.php.dist config.inc.php \
+ && cp -r /tmp/roundcubemail-plugins-kolab/plugins/calendar . && cp -r /tmp/roundcubemail-plugins-kolab/plugins/libcalendaring . && cp -r /tmp/roundcubemail-plugins-kolab/plugins/tasklist . \
+ && cd /roundcube/plugins/calendar && cp config.inc.php.dist config.inc.php && git clone https://github.com/JohnDoh/Roundcube-Plugin-Context-Menu.git contextmenu \
+ && git clone https://github.com/JohnDoh/Roundcube-Plugin-Mark-as-Junk-2.git markasjunk2 && git clone https://github.com/mfreiholz/persistent_login.git persistent_login \
  && find /roundcube -type d -exec chmod 755 {} \; \
  && find /roundcube -type f -exec chmod 644 {} \; \
  && apk del build-dependencies \
  && rm -rf /tmp/* /var/cache/apk/* /root/.gnupg /postfixadmin/postfixadmin-${POST_VERSION}*
-
+RUN cat /roundcube/plugins/calendar/drivers/database/SQL/mysql.initial.sql >> /roundcube/SQL/mysql.initial.sql \
+ && cat /roundcube/plugins/tasklist/drivers/database/SQL/mysql.initial.sql >> /roundcube/SQL/mysql.initial.sql \
+ && cat /roundcube/plugins/persistent_login/sql/mysql.sql >> /roundcube/SQL/mysql.initial.sql
 RUN mkdir /enigma && mv /roundcube/plugins/password/config.inc.php.dist /roundcube/plugins/password/config.inc.php \
- && mv /roundcube/plugins/enigma/config.inc.php.dist /roundcube/plugins/enigma/config.inc.php
+ && mv /roundcube/plugins/enigma/config.inc.php.dist /roundcube/plugins/enigma/config.inc.php \
+ && mv /roundcube/plugins/tasklist/config.inc.php.dist /roundcube/plugins/tasklist/config.inc.php \
+ && mv /roundcube/plugins/persistent_login/config.inc.php.dist /roundcube/plugins/persistent_login/config.inc.php
 RUN sed -i "/'zipdownload',/a ${PLUGINS}" /roundcube/config/config.inc.php
 COPY rootfs /
 RUN chmod +x /usr/local/bin/* /etc/s6.d/*/* /etc/s6.d/.s6-svscan/*
