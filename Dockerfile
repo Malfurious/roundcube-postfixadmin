@@ -6,6 +6,7 @@ LABEL description "Roundcube-Postfix is a simple, modern & fast webmail client c
 ARG ROUND_VERSION=1.3.1
 ARG POST_VERSION=3.1
 ENV UID=991 GID=991 UPLOAD_MAX_SIZE=25M MEMORY_LIMIT=128M
+ENV PLUGINS=" 'password','enigma'"
 RUN echo "@community https://nl.alpinelinux.org/alpine/v3.6/community" >> /etc/apk/repositories \
  && apk -U upgrade
 RUN apk add gnupg openssl dovecot tini@community
@@ -34,6 +35,7 @@ RUN cd /roundcube && php composer.phar install --no-dev \
 
 RUN mkdir /enigma && mv /roundcube/plugins/password/config.inc.php.dist /roundcube/plugins/password/config.inc.php \
  && mv /roundcube/plugins/enigma/config.inc.php.dist /roundcube/plugins/enigma/config.inc.php
+RUN sed -i "/'zipdownload',/a ${PLUGINS}" /roundcube/config/config.inc.php
 COPY rootfs /
 RUN chmod +x /usr/local/bin/* /etc/s6.d/*/* /etc/s6.d/.s6-svscan/*
 EXPOSE 8888 8080

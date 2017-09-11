@@ -83,7 +83,7 @@ echo "MIME Types Configured!"
 
 # Configure MySQL Connection.
 echo "Configuring MySQL Connection..."
-export SQL="\$config['db_dsnw'] = 'mysql://${MYSQL_USER}:${MYSQL_PASS}@${MYSQL_HOST}/${MYSQL_DATABASE}';"
+export SQL="\$config['db_dsnw'] = 'mysql://${ROUND_USER}:${ROUND_PASS}@${MYSQL_HOST}/${ROUND_DB}';"
 sed -i "/roundcubemail';/c $SQL" /roundcube/config/config.inc.php
 echo "MySQL Connection Configured!"
 
@@ -93,13 +93,21 @@ if [ ${ENABLE_IMAPS} == "true" ]; then
         export IMAPS="\$config['default_host'] = 'imaps://${MAIL_HOST}';"
         sed -i "/\$config\['default_host'\]/c $IMAPS" /roundcube/config/config.inc.php
         export PRT="\$config['default_port'] = 993;"
-        sed -i "/imaps:\/\/${MAIL_HOST}/a $PRT" /roundcube/config/config.inc.php
+		if grep -q "993" /roundcube/config/config.inc.php; then
+				echo "Default Port already Set!"
+		else
+				sed -i "/imaps:\/\/${MAIL_HOST}/a $PRT" /roundcube/config/config.inc.php
+		fi
         echo "IMAPS Enabled, and Server Set!"
 elif [ ${ENABLE_IMAPS} == "false" ]; then
         export IMAP="\$config['default_host'] = '${MAIL_HOST}';"
         sed -i "/\$config\['default_host'\]/c $IMAP" /roundcube/config/config.inc.php
         export PRT="\$config['default_port'] = 143;"
-        sed -i "/ssl:\/\/${MAIL_HOST}/a $PRT" /roundcube/config/config.inc.php
+		if grep -q "143" /roundcube/config/config.inc.php; then
+				echo "Default Port already Set!"
+		else
+				sed -i "/ssl:\/\/${MAIL_HOST}/a $PRT" /roundcube/config/config.inc.php
+		fi
         echo "IMAPS Disabled, and Server Set!"
 fi
 if [ ${ENABLE_SMTPS} == "true" ]; then
@@ -114,14 +122,7 @@ elif [ ${ENABLE_SMTPS} == "false" ]; then
         echo "SMTPS Disabled, and Server Set!"
 fi
 
-# Configure Plugins
-echo "Enabling Plugins..."
-export PLUGINS=" 'password','enigma'"
-sed -i "/'zipdownload',/a $PLUGINS" /roundcube/config/config.inc.php
-echo "Plugins: Password, and Enigma Enabled!!"
-
 # Configure Password/Postfixadmin plugin
-export 
 echo "Configuring password plugin with Postfixadmin information."
 export POST="\$config['password_db_dsn'] = 'mysql://${POST_USER}:${POST_PASS}@${MYSQL_HOST}/${POST_DB}';"
 export POSTCMD="\$config['password_query'] = 'UPDATE mailbox SET password=%P WHERE username=%u LIMIT 1';"
@@ -145,14 +146,14 @@ if [ -z ${POSTFIX_PORT} ]; then
 	echo "Postfix WebGUI Port not Specified, using default of 8080."
 else
 	echo "Postfix WebGUI Port Specified as ${POSTFIX_PORT}, configuring as such."
-	sed -i "s/8080/${POSTFIX_PORT}/g" /mnt/user/DockerData/tmp/rootfs/nginx/sites-enabled/postfixadmin.conf
+	sed -i "s/8080/${POSTFIX_PORT}/g" /nginx/sites-enabled/postfixadmin.conf
 	echo "Postfix WebGUI Port configured!"
 fi
 if [ -z ${ROUNDCUBE_PORT} ]; then
 	echo "Roundcube WebGUI Port not Specified, using default of 8888."
 else
 	echo "Roundcube WebGUI Port Specified as ${ROUNDCUBE_PORT}, configuring as such."
-	sed -i "s/8888/${ROUNDCUBE_PORT}/g" /mnt/user/DockerData/tmp/rootfs/nginx/sites-enabled/roundcube.conf
+	sed -i "s/8888/${ROUNDCUBE_PORT}/g" /nginx/sites-enabled/roundcube.conf
 	echo "Roundcube WebGUI Port configured!"
 fi
 
@@ -189,7 +190,7 @@ cat > /postfixadmin/config.local.php <<EOF
 \$CONF['aliases'] = '0';
 \$CONF['mailboxes'] = '0';
 \$CONF['maxquota'] = '0';
-\$CONF['domain_quota_default'] = '0';
+\$CONF['domain_quota_default'] = '500';
 ?>
 EOF
 
