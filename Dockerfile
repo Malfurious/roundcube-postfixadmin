@@ -34,13 +34,13 @@ RUN cd /roundcube && php composer.phar install --no-dev && php composer.phar req
  && cd /roundcube/plugins/calendar && cp config.inc.php.dist config.inc.php && git clone https://github.com/JohnDoh/Roundcube-Plugin-Context-Menu.git contextmenu \
  && git clone https://github.com/JohnDoh/Roundcube-Plugin-Mark-as-Junk-2.git markasjunk2 && git clone https://github.com/mfreiholz/persistent_login.git persistent_login \
  && find /roundcube -type d -exec chmod 755 {} \; \
- && find /roundcube -type f -exec chmod 644 {} \; \
- && apk del build-dependencies \
- && rm -rf /tmp/* /var/cache/apk/* /root/.gnupg /postfixadmin/postfixadmin-${POST_VERSION}*
+ && find /roundcube -type f -exec chmod 644 {} \;
 RUN mkdir /enigma && mv /roundcube/plugins/password/config.inc.php.dist /roundcube/plugins/password/config.inc.php \
  && mv /roundcube/plugins/enigma/config.inc.php.dist /roundcube/plugins/enigma/config.inc.php \
  && mv /roundcube/plugins/tasklist/config.inc.php.dist /roundcube/plugins/tasklist/config.inc.php \
  && mv /roundcube/plugins/persistent_login/config.inc.php.dist /roundcube/plugins/persistent_login/config.inc.php
+RUN apk del build-dependencies \
+ && rm -rf /tmp/* /var/cache/apk/* /root/.gnupg /postfixadmin/postfixadmin-${POST_VERSION}*
 RUN sed -i "/'zipdownload',/a ${PLUGINS}" /roundcube/config/config.inc.php
 COPY rootfs /
 COPY mysql.initial.sql /roundcube/SQL
