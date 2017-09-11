@@ -7,6 +7,10 @@
 PostfixAdmin is a web based interface used to manage mailboxes, virtual domains and aliases. It also features support for vacation/out-of-the-office messages.
 Roundcube Webmail is a browser-based multilingual IMAP client with an application-like user interface. It provides full functionality you expect from an email client, including MIME support, address book, folder management, message searching and spell checking. Roundcube Webmail is written in PHP and requires the MySQL, PostgreSQL or SQLite database. With its plugin API it is easily extendable and the user interface is fully customizable using skins which are pure XHTML and CSS 2.
 
+#### Important Note
+This docker was built to be used with malfurious/mailserver.
+Goto https://github.com/Malfurious/mailserver for more information!
+
 ### Postfixadmin Features
 
 - Lightweight & secure image (no root process)
