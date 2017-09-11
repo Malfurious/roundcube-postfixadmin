@@ -31,7 +31,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/roundcube
 RUN cd /roundcube && php composer.phar install --no-dev && php composer.phar require sabre/vobject 3.3.3 \
  && cd /roundcube/plugins && git clone https://github.com/alexandregz/twofactor_gauthenticator.git && git clone git://github.com/elm/Roundcube-SMTP-per-Identity-Plugin.git identity_smtp \
  && cp -r /tmp/roundcubemail-plugins-kolab/plugins/calendar . && cp -r /tmp/roundcubemail-plugins-kolab/plugins/libcalendaring . && cp -r /tmp/roundcubemail-plugins-kolab/plugins/tasklist . \
- && cd /roundcube/plugins/calendar && cp config.inc.php.dist config.inc.php && git clone https://github.com/JohnDoh/Roundcube-Plugin-Context-Menu.git contextmenu \
+ && cd /roundcube/plugins/calendar && cp config.inc.php.dist config.inc.php 
+RUN cd /roundcube/plugins && git clone https://github.com/JohnDoh/Roundcube-Plugin-Context-Menu.git contextmenu \
  && git clone https://github.com/JohnDoh/Roundcube-Plugin-Mark-as-Junk-2.git markasjunk2 && git clone https://github.com/mfreiholz/persistent_login.git persistent_login \
  && find /roundcube -type d -exec chmod 755 {} \; \
  && find /roundcube -type f -exec chmod 644 {} \;
