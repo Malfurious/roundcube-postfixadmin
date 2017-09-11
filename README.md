@@ -87,11 +87,11 @@ Everything should say "OK" on the first screen, except:
 - **Oracle**
 - **Net_LDAP3**
 - **date.timezone**
-![postfix1](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Postfixadmin-1.PNG "postfix1")
-Hit "Next" at the bottom of the page.
-
+![roundcube1](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Roundcube-Setup-1.PNG "roundcube1")
+### Hit "Next" at the bottom of the page.
 Assuming you entered the MySQL Information correction, you should see a green "OK" next to "DSN (write)".
 If so, click the initialize button.
+![roundcube2](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Roundcube-Setup-2.PNG "roundcube2")
 Once done, feel free to test your connection to the mailserver by entering in mailbox credentials that you setup earlier while configuring Postfixadmin.
 Hopefully, when tested, you will get a green 'OK' indicating its working.
 If everything works, shutdown the container, and start back up with the DISABLE_INSTALLER variable set to 'true'.
