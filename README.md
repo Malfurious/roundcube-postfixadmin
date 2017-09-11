@@ -67,7 +67,7 @@ Replace 'mail.domain.com' with your MAIL_HOST, and the 'xxx.xxx.xxx.xxx' with yo
 Then start the docker.
 
 #### 2. Postfixadmin Setup: Goto http://[YOUR IP]:[POSTFIX PORT]/setup.php
-
+![postfix1](https://raw.githubusercontent.com/Malfurious/docker-examples/master/roundcube-postfixadmin/Postfixadmin-1.PNG "postfix1")
 Enter a long setup password in the first box, then confirm the password in the second. Click 'Generate password hash'
 Something like: $CONF['setup_password'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'; should show up.
 Run the following command on: 'docker exec -it <name of this docker container> setup'
