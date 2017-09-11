@@ -6,7 +6,7 @@ LABEL description "Roundcube-Postfix is a simple, modern & fast webmail client c
 ARG ROUND_VERSION=1.3.1
 ARG POST_VERSION=3.1
 ENV UID=991 GID=991 UPLOAD_MAX_SIZE=25M MEMORY_LIMIT=128M
-ENV PLUGINS=" 'password','enigma','emoticons','filesystem_attachments','managesieve','markasjunk','archive'"
+ENV PLUGINS=" 'password','enigma','emoticons','filesystem_attachments','managesieve','markasjunk','archive','twofactor_gauthenticator'"
 RUN echo "@community https://nl.alpinelinux.org/alpine/v3.6/community" >> /etc/apk/repositories \
  && apk -U upgrade
 RUN apk add gnupg openssl dovecot tini@community
@@ -28,6 +28,7 @@ RUN mkdir /roundcube && tar -xzf /tmp/roundcubemail-${ROUND_VERSION}-complete.ta
 RUN mkdir /postfixadmin && tar xzf /tmp/postfixadmin-${POST_VERSION}.tar.gz -C /postfixadmin && mv /postfixadmin/postfixadmin-${POST_VERSION}/* /postfixadmin
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/roundcube/ --filename=composer.phar
 RUN cd /roundcube && php composer.phar install --no-dev \
+ && cd /roundcube/plugins && git clone https://github.com/alexandregz/twofactor_gauthenticator.git \
  && find /roundcube -type d -exec chmod 755 {} \; \
  && find /roundcube -type f -exec chmod 644 {} \; \
  && apk del build-dependencies \
