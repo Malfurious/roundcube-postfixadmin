@@ -47,7 +47,7 @@ SMTPHOST=${MAIL_HOST}
 DISABLE_INSTALLER=${DISABLE_INSTALLER:-false}
 ENABLE_IMAPS=${ENABLE_IMAPS:-true}
 ENABLE_SMTPS=${ENABLE_SMTPS:-true}
-
+ROUND_DB=${ROUND_DB:-roundcube}
 # Configure Emoticons Plugin
 mv /roundcube/plugins/emoticons/config.inc.php.dist /roundcube/plugins/emoticons/config.inc.php
 export EMOT="\$config['emoticons_display'] = true;"
